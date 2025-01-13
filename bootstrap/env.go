@@ -7,13 +7,13 @@ import (
 )
 
 type Env struct {
-	AppEnv string `mapstructure:"APP_ENV"`
-	port   string `mapstructure:"PORT"`
-	DBHost string `mapstructure:"DB_HOST"`
-	DBPort string `mapstructure:"DB_PORT"`
-	DBUser string `mapstructure:"DB_USER"`
-	DBPass string `mapstructure:"DB_PASSWORD"`
-	DBName string `mapstructure:"DB_NAME"`
+	AppEnv  string `mapstructure:"APP_ENV"`
+	AppPort string `mapstructure:"APP_PORT"`
+	DBHost  string `mapstructure:"DB_HOST"`
+	DBPort  string `mapstructure:"DB_PORT"`
+	DBUser  string `mapstructure:"DB_USER"`
+	DBPass  string `mapstructure:"DB_PASSWORD"`
+	DBName  string `mapstructure:"DB_NAME"`
 }
 
 func NewEnv() *Env {
