@@ -4,6 +4,7 @@ import (
 	"log"
 	"net/http"
 
+	"github.com/a-kumar5/auth-hub/api/middleware"
 	"github.com/a-kumar5/auth-hub/api/route"
 	"github.com/gorilla/mux"
 )
@@ -26,6 +27,7 @@ func App() *Application {
 
 func (app *Application) initializeRoutes() {
 	route.RegisterRoutes(app.Router)
+	app.Router.Use(middleware.AccessLogMiddleware)
 }
 
 func (app *Application) Run(addr string) {
