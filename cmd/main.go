@@ -9,10 +9,8 @@ import (
 func main() {
 	log.Println("Hello, Welcome to auth-hub service")
 	app := bootstrap.App()
-
-	env := app.Env
-	db := app.Postgres.SQLDB
+	//env := app.Env
+	//db := app.Postgres.SQLDB
 	defer app.CloseDBConnection()
-
-	log.Println(env, db)
+	app.Run("0.0.0.0:8080")
 }

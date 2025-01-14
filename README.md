@@ -3,7 +3,7 @@
 ## Building the application
 
 ```bash
-go build -o auth-hub ./cmd/main/main.go
+go build -o auth-hub ./cmd/main.go
 
 ## to run the application
 ./auth-hub
