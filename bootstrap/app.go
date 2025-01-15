@@ -1,12 +1,12 @@
 package bootstrap
 
 import (
-	"log"
 	"net/http"
 
 	"github.com/a-kumar5/auth-hub/api/middleware"
 	"github.com/a-kumar5/auth-hub/api/route"
 	"github.com/gorilla/mux"
+	"github.com/rs/zerolog/log"
 )
 
 type Application struct {
@@ -26,17 +26,19 @@ func App() *Application {
 }
 
 func (app *Application) initializeRoutes() {
-	route.RegisterRoutes(app.Router)
 	app.Router.Use(middleware.AccessLogMiddleware)
+	app.Router.Use(middleware.JsonEncoderMiddleware)
+	route.RegisterRoutes(app.Router)
+	route.RegisterClientRoutes(app.Router, app.Postgres.SQLDB)
 }
 
 func (app *Application) Run(addr string) {
 	if err := http.ListenAndServe(addr, app.Router); err != nil {
-		log.Fatalf("Failed to start server: %v", err)
+		log.Error().Msgf("Failed to start server: %v", err)
 	}
 }
 
 func (app *Application) CloseDBConnection() {
-	log.Println("Closing DB Connection")
+	log.Info().Msg("Closing DB Connection")
 	ClosePostgresDBConnection(*app.Postgres)
 }

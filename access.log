@@ -1,0 +1,15 @@
+2025/01/14 22:15:44 [GET] [::1]:55679 /health 200 PostmanRuntime/7.29.2 0ms
+2025/01/14 22:15:53 [GET] [::1]:55679 / 200 PostmanRuntime/7.29.2 0ms
+2025/01/14 22:16:48 [GET] [::1]:55746 / 200 PostmanRuntime/7.29.2 0ms
+2025/01/14 22:17:15 [GET] [::1]:55746 /health 200 PostmanRuntime/7.29.2 0ms
+2025/01/14 22:18:32 [GET] [::1]:55826 /health 200 PostmanRuntime/7.29.2 0ms
+2025/01/14 22:18:37 [GET] [::1]:55826 / 200 PostmanRuntime/7.29.2 0ms
+2025/01/15 09:58:32 [POST] [::1]:62284 /user 200 PostmanRuntime/7.29.2 11ms
+2025/01/15 10:16:20 [POST] [::1]:64277 /user 200 PostmanRuntime/7.29.2 13ms
+2025/01/15 10:28:06 [POST] [::1]:65121 /user 200 PostmanRuntime/7.29.2 9ms
+2025/01/15 10:46:42 [POST] [::1]:50543 /user 200 PostmanRuntime/7.29.2 7ms
+2025/01/15 11:06:33 [POST] [::1]:52282 /user 200 PostmanRuntime/7.29.2 18ms
+2025/01/15 11:46:48 [POST] [::1]:53397 /user 500 PostmanRuntime/7.29.2 8ms
+2025/01/15 11:47:19 [POST] [::1]:53397 /user 500 PostmanRuntime/7.29.2 5ms
+2025/01/15 11:47:46 [POST] [::1]:53425 /user 200 PostmanRuntime/7.29.2 13ms
+2025/01/15 11:49:17 [POST] [::1]:53547 /user 200 PostmanRuntime/7.29.2 11ms

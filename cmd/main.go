@@ -1,13 +1,13 @@
 package main
 
 import (
-	"log"
+	"github.com/rs/zerolog/log"
 
 	"github.com/a-kumar5/auth-hub/bootstrap"
 )
 
 func main() {
-	log.Println("Hello, Welcome to auth-hub service")
+	log.Info().Msg("Hello, Welcome to auth-hub service")
 	app := bootstrap.App()
 	//env := app.Env
 	//db := app.Postgres.SQLDB

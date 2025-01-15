@@ -11,7 +11,7 @@ import (
 func AccessLogMiddleware(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		// Open or create the log file
-		file, err := os.OpenFile("/var/log/access.log", os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
+		file, err := os.OpenFile("access.log", os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
 		if err != nil {
 			log.Printf("Error opening log file: %v", err)
 			http.Error(w, "Internal Server Error", http.StatusInternalServerError)
