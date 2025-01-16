@@ -21,5 +21,6 @@ func RegisterRoutes(router *mux.Router) {
 }
 
 func RegisterClientRoutes(router *mux.Router, db *sql.DB) {
+	router.HandleFunc("/client", models.GetClients(db)).Methods("GET")
 	router.HandleFunc("/client", models.CreateClient(db)).Methods("POST")
 }

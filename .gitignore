@@ -28,3 +28,7 @@ go.work.sum
 auth-hub
 authhub
 main
+
+# log files
+access.log
+error.log

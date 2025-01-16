@@ -37,9 +37,39 @@ func CreateClient(db *sql.DB) http.HandlerFunc {
 			return
 		}
 		w.WriteHeader(http.StatusOK)
+
+		// hiding password from sending as part of request
+		c.Password = ""
 		json.NewEncoder(w).Encode(map[string]interface{}{
 			"id":      c.ID,
 			"client":  c,
+			"message": "Client created successfully",
+		})
+	}
+}
+
+func GetClients(db *sql.DB) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		rows, err := db.Query("SELECT id, client_name, client_id, created_at FROM Clients")
+		if err != nil {
+			log.Printf("Resource not found: %v", err)
+			http.Error(w, "Resource not found", http.StatusNotFound)
+			return
+		}
+		defer rows.Close()
+		clients := []Client{}
+		for rows.Next() {
+			var c Client
+			if err := rows.Scan(&c.ID, &c.Name, &c.ClientId, &c.CreatedAt); err != nil {
+				log.Printf("Error scanning row: %v", err)
+				http.Error(w, "Error retrieving clients", http.StatusInternalServerError)
+				return
+			}
+			clients = append(clients, c)
+		}
+		w.WriteHeader(http.StatusOK)
+		json.NewEncoder(w).Encode(map[string]interface{}{
+			"client":  clients,
 			"message": "Client created successfully",
 		})
 	}
