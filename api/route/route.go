@@ -5,7 +5,7 @@ import (
 	"encoding/json"
 	"net/http"
 
-	"github.com/a-kumar5/auth-hub/api/models"
+	"github.com/a-kumar5/auth-hub/api/controller"
 	"github.com/gorilla/mux"
 )
 
@@ -21,6 +21,6 @@ func RegisterRoutes(router *mux.Router) {
 }
 
 func RegisterClientRoutes(router *mux.Router, db *sql.DB) {
-	router.HandleFunc("/client", models.GetClients(db)).Methods("GET")
-	router.HandleFunc("/client", models.CreateClient(db)).Methods("POST")
+	router.HandleFunc("/client", controller.GetClients(db)).Methods("GET")
+	router.HandleFunc("/client", controller.CreateClient(db)).Methods("POST")
 }

@@ -17,8 +17,17 @@ type Application struct {
 
 func App() *Application {
 	app := &Application{}
+
+	log.Info().Msg("Initializing application components")
+
 	app.Router = mux.NewRouter()
+	log.Debug().Msg("Router initialized")
+
 	app.Env = NewEnv()
+	log.Debug().
+		Interface("config", app.Env).
+		Msg("Environment configuration loaded")
+
 	app.Postgres = NewPostgresDatabase(app.Env)
 
 	app.initializeRoutes()
@@ -33,6 +42,7 @@ func (app *Application) initializeRoutes() {
 }
 
 func (app *Application) Run(addr string) {
+	log.Info().Msgf("Starting server on %s", addr)
 	if err := http.ListenAndServe(addr, app.Router); err != nil {
 		log.Error().Msgf("Failed to start server: %v", err)
 	}

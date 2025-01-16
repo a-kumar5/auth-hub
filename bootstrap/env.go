@@ -31,7 +31,7 @@ func NewEnv() *Env {
 	}
 
 	if env.AppEnv == "development" {
-		log.Error().Msg("The App is running in development env")
+		log.Info().Msg("The App is running in development env")
 	}
 
 	return &env
