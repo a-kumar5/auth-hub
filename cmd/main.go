@@ -1,12 +1,14 @@
 package main
 
 import (
+	"github.com/rs/zerolog"
 	"github.com/rs/zerolog/log"
 
 	"github.com/a-kumar5/auth-hub/bootstrap"
 )
 
 func main() {
+	zerolog.SetGlobalLevel(zerolog.InfoLevel)
 	log.Logger = log.With().
 		Timestamp().
 		Caller().

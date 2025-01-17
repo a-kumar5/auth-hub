@@ -15,6 +15,8 @@ type Postgres struct {
 }
 
 func NewPostgresDatabase(env *Env) *Postgres {
+	log.Info().Msg("Initializing Postgres database connection")
+
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
 
@@ -23,27 +25,31 @@ func NewPostgresDatabase(env *Env) *Postgres {
 	dbUser := env.DBUser
 	dbPass := env.DBPass
 
+	log.Debug().
+		Str("host", dbHost).
+		Str("port", dbPort).
+		Str("user", dbUser).
+		Msg("Database connection parameters loaded")
+
 	postgresURI := fmt.Sprintf("postgres://%s:%s@%s:%s/authdb?sslmode=disable", dbUser, dbPass, dbHost, dbPort)
-	/*
-		if dbUser == "" || dbPass == "" {
-			postgresURI = fmt.Sprintf("postgres://%s:%s?sslmode=disable", dbHost, dbPort)
-		}
-	*/
 
 	sqlDB, err := sql.Open("postgres", postgresURI)
-
 	if err != nil {
-		log.Error().Msgf("Can't open database connection: ", err)
+		log.Error().
+			Err(err).
+			Msg("Failed to open database connection")
 		return nil
 	}
 
 	err = sqlDB.PingContext(ctx)
 	if err != nil {
-		log.Error().Msgf("Can't ping to database: ", err)
+		log.Error().
+			Err(err).
+			Msg("Failed to ping database")
 		return nil
 	}
 
-	log.Info().Msg("database/sql connection established")
+	log.Info().Msg("Successfully established database connection")
 
 	return &Postgres{
 		SQLDB: sqlDB,
@@ -51,11 +57,15 @@ func NewPostgresDatabase(env *Env) *Postgres {
 }
 
 func ClosePostgresDBConnection(db Postgres) {
+	log.Info().Msg("Attempting to close database connection")
 
 	err := db.SQLDB.Close()
 	if err != nil {
-		log.Error().Msgf("Not able to close db connection: ", err)
+		log.Error().
+			Err(err).
+			Msg("Failed to close database connection")
+		return
 	}
 
-	log.Info().Msg("Connection to Postgres DB closed.")
+	log.Info().Msg("Successfully closed database connection")
 }

@@ -1,0 +1,5 @@
+2025/01/17 16:07:07 [GET] [::1]:58225 / 200 PostmanRuntime/7.29.2 0ms
+2025/01/17 16:07:38 [GET] [::1]:58225 /client 200 PostmanRuntime/7.29.2 6ms
+2025/01/17 16:07:42 [POST] [::1]:58225 /client 500 PostmanRuntime/7.29.2 1138ms
+2025/01/17 16:11:52 [POST] [::1]:58766 /client 500 PostmanRuntime/7.29.2 1099ms
+2025/01/17 16:12:05 [POST] [::1]:58766 /auth/token 200 PostmanRuntime/7.29.2 1106ms
