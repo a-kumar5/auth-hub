@@ -4,7 +4,6 @@ import (
 	"net/http"
 
 	"github.com/a-kumar5/auth-hub/api/middleware"
-	"github.com/a-kumar5/auth-hub/api/route"
 	"github.com/gorilla/mux"
 	"github.com/rs/zerolog/log"
 )
@@ -30,15 +29,14 @@ func App() *Application {
 
 	app.Postgres = NewPostgresDatabase(app.Env)
 
-	app.initializeRoutes()
 	return app
 }
 
-func (app *Application) initializeRoutes() {
+func (app *Application) InitializeRoutes() {
 	app.Router.Use(middleware.AccessLogMiddleware)
 	app.Router.Use(middleware.JsonEncoderMiddleware)
-	route.RegisterRoutes(app.Router)
-	route.RegisterClientRoutes(app.Router, app.Postgres.SQLDB)
+	app.registerRoutes()
+	app.registerClientRoutes()
 }
 
 func (app *Application) Run(addr string) {

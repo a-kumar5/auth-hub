@@ -25,6 +25,8 @@ func main() {
 		app.CloseDBConnection()
 	}()
 
+	app.InitializeRoutes()
+
 	log.Info().Str("address", "0.0.0.0:8080").Msg("Starting server")
 	app.Run("0.0.0.0:8080")
 }

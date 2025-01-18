@@ -76,9 +76,20 @@ func CreateClient(db *sql.DB) http.HandlerFunc {
 	}
 }
 
-func GetClients(db *sql.DB) http.HandlerFunc {
+func GetClients(db *sql.DB, secretKey string) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		log.Info().Msg("Fetching all clients")
+		token := r.Header.Get("Authorization")
+
+		// verify token validity
+		_, err := utils.VerifyToken(token, secretKey)
+		if err != nil {
+			log.Error().
+				Err(err).
+				Msg("Not able to validate the token or token not provided.")
+			http.Error(w, "Unauthorized", http.StatusUnauthorized)
+			return
+		}
 
 		rows, err := db.Query("SELECT id, client_name, client_id, created_at FROM Clients")
 		if err != nil {

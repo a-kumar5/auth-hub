@@ -4,22 +4,12 @@ import (
 	"database/sql"
 	"encoding/json"
 	"net/http"
-	"time"
 
 	"github.com/a-kumar5/auth-hub/api/utils"
-	"github.com/google/uuid"
 	"github.com/rs/zerolog/log"
 )
 
-type Token struct {
-	ID        uuid.UUID `json:"id"`
-	ClientId  string    `json:"client_id"`
-	Token     string    `json:"token"`
-	CreatedAt time.Time `json:"created_at"`
-	ExpiresAt time.Time `json:"expires_at"`
-}
-
-func CreateToken(db *sql.DB) http.HandlerFunc {
+func CreateToken(db *sql.DB, SecretKey string) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		var body struct {
 			ClientId string `json:"client_id"`
@@ -53,7 +43,7 @@ func CreateToken(db *sql.DB) http.HandlerFunc {
 		if err != nil {
 			if err == sql.ErrNoRows {
 				log.Error().
-					Str("client_id", body.ClientId).
+					Err(err).
 					Msg("Client does not exist in database")
 				http.Error(w, "Invalid Client Id", http.StatusBadRequest)
 				return
@@ -63,9 +53,17 @@ func CreateToken(db *sql.DB) http.HandlerFunc {
 
 		if err != nil {
 			log.Error().
-				Str("client_id", body.ClientId).
+				Err(err).
 				Msg("Invalid password provided")
 			http.Error(w, "Invalid Client Id or password", http.StatusUnauthorized)
+			return
+		}
+		token, err := utils.CreateToken(body.ClientId, SecretKey)
+		if err != nil {
+			log.Error().
+				Err(err).
+				Msg("couldn't generate key ")
+			http.Error(w, "couldn't generate key", http.StatusBadGateway)
 			return
 		}
 
@@ -73,8 +71,10 @@ func CreateToken(db *sql.DB) http.HandlerFunc {
 			Str("client_id", body.ClientId).
 			Msg("Token generated successfully")
 
+		w.Header().Set("Authorization", token)
 		json.NewEncoder(w).Encode(map[string]interface{}{
 			"message": "Token Generated Successfully",
+			"token":   token,
 		})
 	}
 }
