@@ -1,9 +1,10 @@
 package bootstrap
 
 import (
-	"github.com/rs/zerolog/log"
+	"os"
 
-	"github.com/spf13/viper"
+	"github.com/joho/godotenv"
+	"github.com/rs/zerolog/log"
 )
 
 type Env struct {
@@ -18,17 +19,20 @@ type Env struct {
 }
 
 func NewEnv() *Env {
-	env := Env{}
-	viper.SetConfigFile(".env")
-
-	err := viper.ReadInConfig()
+	err := godotenv.Load()
 	if err != nil {
-		log.Error().Msgf("Can't find the file .env : ", err)
+		log.Error().Msgf("Error loading .env file: %v", err)
 	}
 
-	err = viper.Unmarshal(&env)
-	if err != nil {
-		log.Error().Msgf("Environment can't be loaded: ", err)
+	env := Env{
+		AppEnv:    os.Getenv("APP_ENV"),
+		AppPort:   os.Getenv("APP_PORT"),
+		DBHost:    os.Getenv("DB_HOST"),
+		DBPort:    os.Getenv("DB_PORT"),
+		DBUser:    os.Getenv("DB_USER"),
+		DBPass:    os.Getenv("DB_PASSWORD"),
+		DBName:    os.Getenv("DB_NAME"),
+		SecretKey: os.Getenv("SECRET_KEY"),
 	}
 
 	if env.AppEnv == "development" {

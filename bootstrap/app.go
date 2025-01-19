@@ -36,7 +36,7 @@ func (app *Application) InitializeRoutes() {
 	app.Router.Use(middleware.AccessLogMiddleware)
 	app.Router.Use(middleware.JsonEncoderMiddleware)
 	app.registerRoutes()
-	app.registerClientRoutes()
+	app.registerApplicationRoutes()
 }
 
 func (app *Application) Run(addr string) {

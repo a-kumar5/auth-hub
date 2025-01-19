@@ -4,13 +4,16 @@ import (
 	"database/sql"
 	"encoding/json"
 	"net/http"
+	"os"
 
 	"github.com/a-kumar5/auth-hub/api/utils"
 	"github.com/rs/zerolog/log"
 )
 
-func CreateToken(db *sql.DB, SecretKey string) http.HandlerFunc {
+func CreateToken(db *sql.DB) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
+		secretKey := os.Getenv("SECRET_KEY")
+
 		var body struct {
 			ClientId string `json:"client_id"`
 			Password string `json:"password"`
@@ -58,7 +61,7 @@ func CreateToken(db *sql.DB, SecretKey string) http.HandlerFunc {
 			http.Error(w, "Invalid Client Id or password", http.StatusUnauthorized)
 			return
 		}
-		token, err := utils.CreateToken(body.ClientId, SecretKey)
+		token, err := utils.CreateToken(body.ClientId, secretKey)
 		if err != nil {
 			log.Error().
 				Err(err).
