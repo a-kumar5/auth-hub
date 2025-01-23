@@ -6,6 +6,7 @@ import (
 
 	"github.com/a-kumar5/auth-hub/api/controller"
 	"github.com/a-kumar5/auth-hub/api/middleware"
+
 	"github.com/rs/zerolog/log"
 )
 
@@ -31,7 +32,6 @@ func (app *Application) registerApplicationRoutes() {
 	log.Info().Msg("Registering client routes")
 	r := app.Router
 	r.Path("/api/v1/auth/token").Handler(http.HandlerFunc(controller.CreateToken(app.Postgres.SQLDB)))
-	//r.Path("/auth/token").Handler(http.HandlerFunc(controller.CreateToken(app.Postgres.SQLDB, app.Env.SecretKey))).Methods("POST")
 	api := r.PathPrefix("/api/v1").Subrouter()
 	api.Use(middleware.ValidateAuth)
 	api.Path("/client").Handler(controller.GetClients(app.Postgres.SQLDB)).Methods("GET")

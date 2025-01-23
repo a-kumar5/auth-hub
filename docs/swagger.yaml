@@ -1,0 +1,16 @@
+basePath: /api/v1
+host: localhost:8080
+info:
+  contact:
+    email: support@auth-hub.io
+    name: Auth Hub Support
+    url: http://auth-hub.io/support
+  description: Authentication and Authorization Service API
+  license:
+    name: MIT License
+    url: https://opensource.org/licenses/MIT
+  termsOfService: http://auth-hub.io/terms/
+  title: Auth Hub API
+  version: "1.0"
+paths: {}
+swagger: "2.0"

@@ -1,0 +1,21 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "Authentication and Authorization Service API",
+        "title": "Auth Hub API",
+        "termsOfService": "http://auth-hub.io/terms/",
+        "contact": {
+            "name": "Auth Hub Support",
+            "url": "http://auth-hub.io/support",
+            "email": "support@auth-hub.io"
+        },
+        "license": {
+            "name": "MIT License",
+            "url": "https://opensource.org/licenses/MIT"
+        },
+        "version": "1.0"
+    },
+    "host": "localhost:8080",
+    "basePath": "/api/v1",
+    "paths": {}
+}
